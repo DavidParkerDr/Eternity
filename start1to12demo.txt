@@ -1,0 +1,14 @@
+/* Parameters: first is dataset (1 = eternity2, you can use full filenames too), 
+next is start corner, then end corner, and finally the save name. */
+start 1 0 1 eternity1.txt	files/curvypath.txt
+start 1 1 2 eternity2.txt	files/curvypath.txt
+start 1 2 3 eternity3.txt	files/curvypath.txt
+start 1 3 4 eternity4.txt	files/curvypath.txt
+start 1 4 5 eternity5.txt	files/curvypath.txt
+start 1 5 6 eternity6.txt	files/curvypath.txt
+start 1 6 7 eternity7.txt	files/curvypath.txt
+start 1 7 8 eternity8.txt	files/curvypath.txt
+start 1 8 9 eternity9.txt	files/curvypath.txt
+start 1 9 10 eternity10.txt	files/curvypath.txt
+start 1 10 11 eternity11.txt	files/curvypath.txt
+start 1 11 12 eternity12.txt	files/curvypath.txt

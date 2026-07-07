@@ -1,0 +1,13 @@
+/* Parameters: save file to load (automatically prepends "files/" to it!) */
+load eternity1.txt
+load eternity2.txt
+load eternity3.txt
+load eternity4.txt
+load eternity5.txt
+load eternity6.txt
+load eternity7.txt
+load eternity8.txt
+load eternity9.txt
+load eternity10.txt
+load eternity11.txt
+load eternity12.txt

@@ -1,0 +1,6 @@
+Tile number 181
+Grid reference N3
+Orientation:
+	SSIC
+PCGO		XCVY
+	BSPY

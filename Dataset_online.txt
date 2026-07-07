@@ -1,0 +1,17 @@
+4 4
+1 B C A A
+2 C B A A
+3 B B A A
+4 C C A A
+5 D C A C
+6 D B A B
+7 D C A B
+8 D B A C
+9 E C A C
+10 E B A B
+11 E B A C
+12 E C A B 
+13 E D E E
+14 D D D E
+15 D D E E
+16 D D E E
