@@ -4,18 +4,16 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
-#include <boost/thread.hpp>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
+#include <thread>
+#include <functional>
 using namespace std;
-using namespace boost;
 
 // Thread Variables
 int					start		;
 int					end			;
-vector<thread*>		threads		;
+vector<std::thread*>		threads		;
 vector<Board*>		boards		;
-thread*				viewThread	= NULL;
+std::thread*				viewThread	= nullptr;
 int					numThreads	= 0;
 int					runView		= -1;
 Viewer*				viewer		;
@@ -39,8 +37,8 @@ void runThread(int threadID, std::string dataset, std::string saveFile, std::str
 		b->solve(start, end);
 	}
 	cout << "* Thread " << threadID + 1 << " stopped." << endl;
-	threads[threadID] = NULL;
-	boards[threadID] = NULL;
+	threads[threadID] = nullptr;
+	boards[threadID] = nullptr;
 	delete b;
 }
 
@@ -61,8 +59,8 @@ void runViewer()
 		if (viewer) viewer->run();
 	}
 	if (viewer) delete viewer;
-	viewer = NULL;
-	viewThread = NULL;
+	viewer = nullptr;
+	viewThread = nullptr;
 }
 
 // Main Function
@@ -152,10 +150,10 @@ int main(int argc, char** argv)
 				// Make function object
 				start = startConfig;
 				end = endConfig;
-				function<void (void)> runner = bind(&runThread, numThreads, dataset, saveFile, pathFile, false);
+				std::function<void (void)> runner = std::bind(&runThread, numThreads, dataset, saveFile, pathFile, false);
 
 				// Activate it
-				threads.push_back(new thread(runner)); 
+				threads.push_back(new std::thread(runner)); 
 				numThreads++;
 				_sleep(250);
 			}
@@ -174,10 +172,10 @@ int main(int argc, char** argv)
 			// Make function object
 			start = 0;
 			end = 24;
-			function<void (void)> runner = bind(&runThread, numThreads, "Dataset_eternity2.txt", "quickstart.txt", "", false);
+			std::function<void (void)> runner = std::bind(&runThread, numThreads, "Dataset_eternity2.txt", "quickstart.txt", "", false);
 
 			// Activate it
-			threads.push_back(new thread(runner)); 
+			threads.push_back(new std::thread(runner)); 
 			numThreads++;
 			_sleep(250);
 		}
@@ -198,10 +196,10 @@ int main(int argc, char** argv)
 				cout << "+ Loading thread " << numThreads + 1 << endl;
 			
 				// Make function object
-				function<void (void)> runner = bind(&runThread, numThreads, "", filename, "", true);
+				std::function<void (void)> runner = std::bind(&runThread, numThreads, "", filename, "", true);
 
 				// Activate it
-				threads.push_back(new thread(runner)); 
+				threads.push_back(new std::thread(runner)); 
 				numThreads++;
 				_sleep(250);
 			}
@@ -281,7 +279,7 @@ int main(int argc, char** argv)
 					if (runView == -1 && !viewThread)
 					{
 						runView = thread-1;
-						viewThread = new boost::thread(&runViewer);
+						viewThread = new std::thread(&runViewer);
 					}
 					else
 					{
@@ -347,10 +345,10 @@ int main(int argc, char** argv)
 						cout << "  - Load " << fileToLoad << endl;
 
 						// Make function object
-						function<void (void)> runner = bind(&runThread, numThreads, "", fileToLoad, "", true);
+						std::function<void (void)> runner = std::bind(&runThread, numThreads, "", fileToLoad, "", true);
 
 						// Activate it
-						threads.push_back(new thread(runner)); 
+						threads.push_back(new std::thread(runner)); 
 						numThreads++;
 						_sleep(1000);
 					}
@@ -384,10 +382,10 @@ int main(int argc, char** argv)
 						cout << "  - Start " << dataset << " S:" << startCorner << " E:" << endCorner << " " << saveName << " Path:" << path << endl;
 
 						// Make function object
-						function<void (void)> runner = bind(&runThread, numThreads, dataset, saveName, path, false);
+						std::function<void (void)> runner = std::bind(&runThread, numThreads, dataset, saveName, path, false);
 
 						// Activate it
-						threads.push_back(new thread(runner)); 
+						threads.push_back(new std::thread(runner)); 
 						numThreads++;
 						_sleep(1000);
 					}
