@@ -37,12 +37,14 @@ AnimatedSprite::AnimatedSprite(Engine& engine, Image* image, int xtiles, int yti
 
 	// First cut up the image into pieces, convert them into textures, and store them in an array
 	core::array<IImage*> images;
-	dimension2di tsize(_width, _height);
+	dimension2d<u32> tsize((u32)_width, (u32)_height);
 	for (int y = 0; y < ytiles; y++)
 	{
 		for (int x = 0; x < xtiles; x++)
 		{
-			IImage* newImage = image->createImageCopy(position2di(x*_width,y*_height),tsize);
+			IImage* newImage = _engine.getVideoDriver()->createImage(image->getColorFormat(), tsize);
+			rect<s32> srcRect(x * _width, y * _height, (x + 1) * _width, (y + 1) * _height);
+			image->copyTo(newImage, position2di(0,0), srcRect);
 			images.push_back(newImage);
 		}
 	}

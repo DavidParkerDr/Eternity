@@ -46,7 +46,7 @@ Board::Board(int threadID, std::string datasetName, std::string saveName, std::s
 
 // Loading constructor (ignore dataset, it gets overwritten)
 Board::Board(int threadID, std::string saveName)
-: _dataset("Dataset_eternity2.txt"), _solutions(0), _saveName(saveName), _stopSignal(0), _threadID(threadID),
+: _dataset("Dataset_Eternity2.txt"), _solutions(0), _saveName(saveName), _stopSignal(0), _threadID(threadID),
   _runSilent(false), _furthestPathID(0)
 {
 

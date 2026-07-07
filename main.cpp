@@ -5,12 +5,13 @@
 #include <iostream>
 #include <fstream>
 #include <thread>
+#include <chrono>
 #include <functional>
 using namespace std;
 
 // Thread Variables
 int					start		;
-int					end			;
+int					endConfig	;
 vector<std::thread*>		threads		;
 vector<Board*>		boards		;
 std::thread*				viewThread	= nullptr;
@@ -34,7 +35,7 @@ void runThread(int threadID, std::string dataset, std::string saveFile, std::str
 	{
 		b = new Board(threadID+1, dataset, saveFile, pathFile);
 		boards.push_back(b);
-		b->solve(start, end);
+		b->solve(start, endConfig);
 	}
 	cout << "* Thread " << threadID + 1 << " stopped." << endl;
 	threads[threadID] = nullptr;
@@ -48,9 +49,10 @@ void runViewer()
 	if (!viewer)
 	{
 		// Hide Irrlicht junk
-		freopen("files/junk.txt","w",stdout);
+		FILE* redirectedStream = nullptr;
+		freopen_s(&redirectedStream, "files/junk.txt", "w", stdout);
 		viewer = new Viewer(boards[runView]);
-		freopen("CON","w",stdout);
+		freopen_s(&redirectedStream, "CON", "w", stdout);
 		cout << "+ Viewer opened" << endl;
 //		system("del junk.txt");
 	}
@@ -108,7 +110,7 @@ int main(int argc, char** argv)
 			cout << "  4. Online example" << endl;
 			cout << "  Please enter the number of the dataset you wish to use, or type a new\n  filename:\n-> ";
 			cin >> dataset;
-			if (dataset == "1")			dataset = "Dataset_eternity2.txt";
+			if (dataset == "1")			dataset = "Dataset_Eternity2.txt";
 			else if (dataset == "2")	dataset = "Dataset_clue1.txt";
 			else if (dataset == "3")	dataset = "Dataset_clue2.txt";
 			else if (dataset == "4")	dataset = "Dataset_online.txt";
@@ -149,13 +151,13 @@ int main(int argc, char** argv)
 			
 				// Make function object
 				start = startConfig;
-				end = endConfig;
+				endConfig = endConfig;
 				std::function<void (void)> runner = std::bind(&runThread, numThreads, dataset, saveFile, pathFile, false);
 
 				// Activate it
 				threads.push_back(new std::thread(runner)); 
 				numThreads++;
-				_sleep(250);
+				std::this_thread::sleep_for(std::chrono::milliseconds(250));
 			}
 		}
 		else if (input == "QSTART" || input == "qstart")
@@ -171,13 +173,13 @@ int main(int argc, char** argv)
 			
 			// Make function object
 			start = 0;
-			end = 24;
-			std::function<void (void)> runner = std::bind(&runThread, numThreads, "Dataset_eternity2.txt", "quickstart.txt", "", false);
+			endConfig = 24;
+			std::function<void (void)> runner = std::bind(&runThread, numThreads, "Dataset_Eternity2.txt", "quickstart.txt", "", false);
 
 			// Activate it
 			threads.push_back(new std::thread(runner)); 
 			numThreads++;
-			_sleep(250);
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
 		}
 		else if (input == "LOAD" || input == "load")
 		{
@@ -201,7 +203,7 @@ int main(int argc, char** argv)
 				// Activate it
 				threads.push_back(new std::thread(runner)); 
 				numThreads++;
-				_sleep(250);
+				std::this_thread::sleep_for(std::chrono::milliseconds(250));
 			}
 		}
 		else if (input == "STOP" || input == "stop")
@@ -230,7 +232,7 @@ int main(int argc, char** argv)
 						viewThread->join();
 					}
 					b->stop();
-					_sleep(250);
+					std::this_thread::sleep_for(std::chrono::milliseconds(250));
 				}
 				else
 				{
@@ -286,7 +288,7 @@ int main(int argc, char** argv)
 						runView = thread-1;
 						viewer->setBoard(boards[runView]);
 					}
-					_sleep(250);
+					std::this_thread::sleep_for(std::chrono::milliseconds(250));
 				}
 				else
 				{
@@ -350,7 +352,7 @@ int main(int argc, char** argv)
 						// Activate it
 						threads.push_back(new std::thread(runner)); 
 						numThreads++;
-						_sleep(1000);
+						std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 					}
 					// START command
 					else if (data == "start")
@@ -362,14 +364,14 @@ int main(int argc, char** argv)
 						fin >> startCorner >> endCorner;
 
 						// Check dataset
-						if (dataset == "1")			dataset = "Dataset_eternity2.txt";
+						if (dataset == "1")			dataset = "Dataset_Eternity2.txt";
 						else if (dataset == "2")	dataset = "Dataset_clue1.txt";
 						else if (dataset == "3")	dataset = "Dataset_clue2.txt";
 						else if (dataset == "4")	dataset = "Dataset_online.txt";
 
 						// set start params
 						start = startCorner;
-						end = endCorner;
+						endConfig = endCorner;
 
 						// load save name
 						std::string saveName;
@@ -387,7 +389,7 @@ int main(int argc, char** argv)
 						// Activate it
 						threads.push_back(new std::thread(runner)); 
 						numThreads++;
-						_sleep(1000);
+						std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 					}
 					// Comments
 					else if (data == "/*")

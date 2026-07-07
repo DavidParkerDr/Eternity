@@ -19,10 +19,44 @@ Dataset::~Dataset()
 void Dataset::load(std::string fileName)
 {
 	_tiles.clear();
-	ifstream fin(fileName.c_str());
+	_corners.clear();
+	_edges.clear();
+	_middlePieces.clear();
+	_fixedPieces.clear();
+
+	std::vector<std::string> candidates;
+	candidates.push_back(fileName);
+
+	if (fileName == "Dataset_eternity2.txt")
+	{
+		candidates.push_back("Dataset_Eternity2.txt");
+	}
+	else if (fileName == "Dataset_Eternity2.txt")
+	{
+		candidates.push_back("Dataset_eternity2.txt");
+	}
+
+	const size_t baseCandidateCount = candidates.size();
+	for (size_t i = 0; i < baseCandidateCount; ++i)
+	{
+		candidates.push_back("..\\" + candidates[i]);
+	}
+
+	std::ifstream fin;
+	std::string resolvedName = fileName;
+	for (size_t i = 0; i < candidates.size(); ++i)
+	{
+		fin.open(candidates[i].c_str());
+		if (fin)
+		{
+			resolvedName = candidates[i];
+			break;
+		}
+		fin.clear();
+	}
 	if (fin)
 	{
-		_fileName = fileName; 
+		_fileName = resolvedName; 
 		fin >> _boardWidth >> _boardHeight;
 		for (int i = 0; i < _boardWidth * _boardHeight; i++)
 		{

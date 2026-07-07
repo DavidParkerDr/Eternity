@@ -427,3 +427,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/VS8 Solution/.github/copilot-instructions.md

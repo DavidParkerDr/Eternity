@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-#include "Irrlicht.h"
+#include <irrlicht.h>
 
 // Useful inlined maths functions
 

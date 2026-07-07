@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\2D Engine\Headers&quot;"
+				AdditionalIncludeDirectories="&quot;..\2D Engine\Headers&quot;;&quot;..\Dependencies\irrlicht-1.8.5\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,10 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="irrlicht.lib irrklang.lib 2dengine.lib"
+				AdditionalDependencies="irrlicht.lib 2dengine.lib"
 				OutputFile="..\bin\$(ProjectName)d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\2D Engine\bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\2D Engine\bin&quot;;&quot;..\Dependencies\irrlicht-1.8.5\lib\Win32-visualstudio&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -121,7 +121,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;..\2D Engine\Headers&quot;"
+				AdditionalIncludeDirectories="&quot;..\2D Engine\Headers&quot;;&quot;..\Dependencies\irrlicht-1.8.5\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -140,10 +140,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="2dengine.lib irrlicht.lib irrklang.lib"
+				AdditionalDependencies="2dengine.lib irrlicht.lib"
 				OutputFile="..\bin\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\2D Engine\bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\2D Engine\bin&quot;;&quot;..\Dependencies\irrlicht-1.8.5\lib\Win32-visualstudio&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="1"

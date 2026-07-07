@@ -20,21 +20,19 @@ Engine::Engine(int width, int height, int bits, bool fullScreen, bool vsync)
 
 	// Attempt to load Irrlicht
 	video::E_DRIVER_TYPE driverType = video::EDT_SOFTWARE;//EDT_OPENGL;
-	_device = createDevice(driverType, core::dimension2d<s32>(width, height), bits, fullScreen, false, vsync);
+	_device = createDevice(driverType, core::dimension2d<u32>((u32)width, (u32)height), bits, fullScreen, false, vsync);
 
 	if (_device == NULL)
 	{
 		throw exception("Could not initialise OpenGL!");
 	}
 
-	_dir		= _device->getFileSystem()->getWorkingDirectory();
+	_dir		= _device->getFileSystem()->getWorkingDirectory().c_str();
 	_driver		= _device->getVideoDriver();
 	_smgr		= _device->getSceneManager();
 	_gui		= _device->getGUIEnvironment();
 
 	_driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-
-//	_soundEngine = irrklang::createIrrKlangDevice();
 
 	_font = _gui->getBuiltInFont();
 }
@@ -55,8 +53,6 @@ void Engine::predestruct()
 		Image* img = i->second;
 		img->drop();
 	}
-//	_soundEngine->drop();
-	_soundEngine = NULL;
 	_device->drop();
 	_device = NULL;
 }
@@ -181,23 +177,6 @@ Image* Engine::loadImage(std::string fileName)
 
 /*******************************************************************************/
 
-Sound* Engine::loadSound(std::string fileName)					
-{
-	std::map<std::string, Sound*>::const_iterator i = _sounds.find(fileName);
-	if (i != _sounds.end())
-	{
-		return i->second;
-	}
-	else
-	{
-		Sound* sound = _soundEngine->addSoundSource(fileName.c_str());
-		_sounds[fileName] = sound;
-		return sound;
-	}	
-}
-
-/*******************************************************************************/
-
 ITexture* Engine::loadTexture(std::string fileName)
 {
 	std::map<std::string, Texture*>::const_iterator i = _textures.find(fileName);
@@ -248,7 +227,7 @@ void Engine::lockCamera(Sprite* sprite, float distance)
 		}
 		else
 		{
-			_camera->setPosition(Vector(0,0,-_driver->getScreenSize().Width/2.0f));
+			_camera->setPosition(Vector(0,0,-(f32)_driver->getScreenSize().Width/2.0f));
 			_camera->setTarget(Vector(0,0,0));
 		}
 	}
@@ -273,20 +252,6 @@ Sprite* Engine::spriteAtScreenCoords(int x, int y)
 		return (Sprite*)node;
 	}
 	return NULL;
-}
-
-/*******************************************************************************/
-
-void Engine::positionListener(const Vector& pos, const Vector& lookAt)
-{
-	if (lookAt.getLengthSQ() == 0)
-	{
-		_soundEngine->setListenerPosition(pos, Vector(pos.X, pos.Y, 0), Vector(0,0,-1));
-	}
-	else
-	{
-		_soundEngine->setListenerPosition(pos, lookAt, Vector(0,0,-1));
-	}
 }
 
 /*******************************************************************************/

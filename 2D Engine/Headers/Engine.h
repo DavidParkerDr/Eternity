@@ -1,6 +1,5 @@
 #pragma once
-#include "Irrlicht.h"
-#include "Irrklang.h"
+#include <irrlicht.h>
 #include <string>
 #include <map>
 using namespace irr;
@@ -14,8 +13,6 @@ typedef irr::video::IImage					Image;
 typedef irr::video::SMaterial				Material;
 typedef irr::core::position2di				Position;
 typedef irr::core::rect<s32>				Rectangle;
-typedef irrklang::ISoundEngine				SoundEngine;
-typedef irrklang::ISoundSource				Sound;
 typedef irr::video::ITexture				Texture;
 typedef irr::core::array<video::ITexture*>	TextureArray;
 typedef irr::core::vector3df				Vector;
@@ -42,8 +39,6 @@ private:
 	gui::IGUIEnvironment*						_gui;
 	std::map<std::string, video::IImage*>		_images;
 	scene::ISceneManager*						_smgr;
-	SoundEngine*								_soundEngine;
-	std::map<std::string, Sound*>				_sounds;
 	std::map<std::string, video::ITexture*>		_textures;
 
 	////////////
@@ -70,7 +65,7 @@ private:
 	// Accessors
 public:
 	scene::ICameraSceneNode* getCamera()			const	{ return _camera; }
-	std::string getCurrentDirectory()				const	{ return _device->getFileSystem()->getWorkingDirectory(); }
+	std::string getCurrentDirectory()				const	{ return _device->getFileSystem()->getWorkingDirectory().c_str(); }
 	std::string getDir()							const	{ return _dir; }
 	FileList* getFileList(std::string dir)					{ _device->getFileSystem()->changeWorkingDirectoryTo(dir.c_str()); FileList* fs = _device->getFileSystem()->createFileList(); resetDirectory(); return fs; }
 	Font* getFont(std::string name)					const	{ std::map<std::string, Font*>::const_iterator i = _fonts.find(name); if (i != _fonts.end()) return i->second; return NULL; }
@@ -78,7 +73,6 @@ public:
 	gui::IGUIEnvironment* getGUI()					const	{ return _gui; }
 	Image* getImage(std::string name)				const	;
 	scene::ISceneManager* getSceneManager()			const	{ return _smgr; }
-	SoundEngine* getSoundEngine()					const	{ return _soundEngine; }
 	Texture* getTexture(std::string name)			const	;
 	video::IVideoDriver* getVideoDriver()			const	{ return _driver; }
 	bool isRunning()								const	{ return _device->run(); }
@@ -142,8 +136,6 @@ public:
 
 	Image* loadImage(std::string fileName)					;
 
-	Sound* loadSound(std::string fileName)					;
-
 	/// Loads and stores a texture from a file
 	Texture* loadTexture(std::string fileName)				;
 
@@ -153,14 +145,6 @@ public:
 	/// Lock camera to a given Sprite (NULL unlocks camera)
 	void lockCamera(Sprite* sprite, float distance)			;
 
-	/// Plays a sound in 2D mode
-	void playSound2D(std::string soundName)					{ Sound* sound = loadSound(soundName); _soundEngine->play2D(sound); }
-	void playSound2D(Sound* sound)							{ _soundEngine->play2D(sound); }
-
-	/// Plays a sound in 3D mode
-	void playSound3D(std::string soundName, const Vector& pos)	{ Sound* sound = loadSound(soundName); _soundEngine->play3D(sound, pos); }
-	void playSound3D(Sound* sound, const Vector& pos)			{ _soundEngine->play3D(sound, pos); }
-
 	/// Gets the screen coordinates of the given position
 	core::position2di screenCoordinatesOf(const Vector& pos)	{ return _smgr->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition(pos); }
 
@@ -169,9 +153,6 @@ public:
 
 	/// Gets the sprite at the given screen coordinates
 	Sprite* spriteAtScreenCoords(int x, int y)				;
-
-	/// Setup the sound listener position
-	void positionListener(const Vector& pos, const Vector& lookAt=Vector(0,0,0));
 
 	/// Resets the current working directory back to the exe dir
 	void resetDirectory()									{ _device->getFileSystem()->changeWorkingDirectoryTo(_dir.c_str()); }

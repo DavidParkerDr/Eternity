@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Users\David\Documents\Developments\Irrlicht1_4\irrlicht-1.4\irrKlang-1.0.3\include&quot;;&quot;C:\Users\David\Documents\Developments\Irrlicht1_4\irrlicht-1.4\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\Dependencies\irrlicht-1.8.5\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -104,7 +104,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;C:\Users\David\Documents\Developments\Irrlicht1_4\irrlicht-1.4\irrKlang-1.0.3\include&quot;;&quot;C:\Users\David\Documents\Developments\Irrlicht1_4\irrlicht-1.4\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\Dependencies\irrlicht-1.8.5\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"

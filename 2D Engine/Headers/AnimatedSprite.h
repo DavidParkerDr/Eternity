@@ -1,6 +1,6 @@
 #pragma once
 #include "sprite.h"
-#include "Irrlicht.h"
+#include <irrlicht.h>
 #include "Engine.h"
 #include "CircleTree.h"
 #include "Maths.h"
