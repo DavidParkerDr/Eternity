@@ -110,10 +110,10 @@ int main(int argc, char** argv)
 			cout << "  4. Online example" << endl;
 			cout << "  Please enter the number of the dataset you wish to use, or type a new\n  filename:\n-> ";
 			cin >> dataset;
-			if (dataset == "1")			dataset = "Dataset_Eternity2.txt";
-			else if (dataset == "2")	dataset = "Dataset_clue1.txt";
-			else if (dataset == "3")	dataset = "Dataset_clue2.txt";
-			else if (dataset == "4")	dataset = "Dataset_online.txt";
+			if (dataset == "1")			dataset = "datasets/Dataset_Eternity2.txt";
+			else if (dataset == "2")	dataset = "datasets/Dataset_clue1.txt";
+			else if (dataset == "3")	dataset = "datasets/Dataset_clue2.txt";
+			else if (dataset == "4")	dataset = "datasets/Dataset_online.txt";
 			cout << "  Please enter the corner config you wish to start with (0-23) :\n:-> ";
 			int startConfig = 0;
 			int endConfig = 23;
@@ -174,7 +174,7 @@ int main(int argc, char** argv)
 			// Make function object
 			start = 0;
 			endConfig = 24;
-			std::function<void (void)> runner = std::bind(&runThread, numThreads, "Dataset_Eternity2.txt", "quickstart.txt", "", false);
+			std::function<void (void)> runner = std::bind(&runThread, numThreads, "datasets/Dataset_Eternity2.txt", "quickstart.txt", "", false);
 
 			// Activate it
 			threads.push_back(new std::thread(runner)); 
@@ -185,7 +185,7 @@ int main(int argc, char** argv)
 		{
 			cout << "+ Load a previous thread" << endl;
 			std::string filename;
-			cout << "  NB: All loaded/saved state files are stored in the \"FILES\" directory.\n";
+			cout << "  NB: All loaded/saved state files are stored in the \"files\" directory.\n";
 			cout << "  Please enter the file name you wish to load:\n:-> ";
 			cin >> filename;
 			cout << "  Please confirm this parameter:" << endl;
@@ -307,7 +307,7 @@ int main(int argc, char** argv)
 		else if (input == "TIMER" || input == "timer")
 		{
 			// Performance timer
-			Board* b = new Board(0,"Dataset_online.txt","onlinetimer.txt","VERTICAL");
+			Board* b = new Board(0,"datasets/Dataset_online.txt","onlinetimer.txt","VERTICAL");
 			b->setRunSilent(true);
 			Timer t;
 			for (int i = 0; i < 1000; i++)
@@ -364,10 +364,10 @@ int main(int argc, char** argv)
 						fin >> startCorner >> endCorner;
 
 						// Check dataset
-						if (dataset == "1")			dataset = "Dataset_Eternity2.txt";
-						else if (dataset == "2")	dataset = "Dataset_clue1.txt";
-						else if (dataset == "3")	dataset = "Dataset_clue2.txt";
-						else if (dataset == "4")	dataset = "Dataset_online.txt";
+						if (dataset == "1")			dataset = "datasets/Dataset_Eternity2.txt";
+						else if (dataset == "2")	dataset = "datasets/Dataset_clue1.txt";
+						else if (dataset == "3")	dataset = "datasets/Dataset_clue2.txt";
+						else if (dataset == "4")	dataset = "datasets/Dataset_online.txt";
 
 						// set start params
 						start = startCorner;

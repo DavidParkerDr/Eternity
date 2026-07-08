@@ -40,7 +40,7 @@ Viewer::Viewer(Board* b)
 	}
 	else
 	{
-		_board = new Board(0,"Dataset_Eternity2.txt", "ViewerBoard", "");
+		_board = new Board(0,"datasets/Dataset_Eternity2.txt", "ViewerBoard", "");
 		_boardIsOwned = true;
 	}
 
@@ -73,7 +73,7 @@ void Viewer::load()
 		for (int n = 1; n <= 4; n++)
 		{
 			stringstream fname;
-			fname << "Textures/" << i->first << n << ".bmp";
+			fname << "textures/" << i->first << n << ".bmp";
 			Texture* texture = _engine->loadTexture(fname.str(), irr::video::SColor(255,255,255,255));
 			if (!texture)
 			{

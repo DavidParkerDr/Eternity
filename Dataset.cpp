@@ -27,19 +27,30 @@ void Dataset::load(std::string fileName)
 	std::vector<std::string> candidates;
 	candidates.push_back(fileName);
 
+	if (fileName.find("datasets/") == std::string::npos && fileName.find("datasets\\") == std::string::npos)
+	{
+		candidates.push_back("datasets/" + fileName);
+		candidates.push_back("datasets\\" + fileName);
+	}
+
 	if (fileName == "Dataset_eternity2.txt")
 	{
 		candidates.push_back("Dataset_Eternity2.txt");
+		candidates.push_back("datasets/Dataset_Eternity2.txt");
+		candidates.push_back("datasets\\Dataset_Eternity2.txt");
 	}
 	else if (fileName == "Dataset_Eternity2.txt")
 	{
 		candidates.push_back("Dataset_eternity2.txt");
+		candidates.push_back("datasets/Dataset_eternity2.txt");
+		candidates.push_back("datasets\\Dataset_eternity2.txt");
 	}
 
 	const size_t baseCandidateCount = candidates.size();
 	for (size_t i = 0; i < baseCandidateCount; ++i)
 	{
 		candidates.push_back("..\\" + candidates[i]);
+		candidates.push_back("../" + candidates[i]);
 	}
 
 	std::ifstream fin;

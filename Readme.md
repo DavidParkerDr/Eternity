@@ -16,7 +16,7 @@ The CLI is the interface to Maximus. It offers the following commands, all of wh
   Simply clears the screen of text.
 
 - `LOAD`  
-  Loads a previously saved solver thread. All saved files are stored in the `Files` directory, and the program looks there automatically. This command asks for the file name you wish to load, which should be the name you originally gave the thread. You do not need to include the `Files/` part. If the file can be found, Maximus loads it and continues from where it left off.
+  Loads a previously saved solver thread. All saved files are stored in the `files/` directory, and the program looks there automatically. This command asks for the file name you wish to load, which should be the name you originally gave the thread. You do not need to include the `files/` part. If the file can be found, Maximus loads it and continues from where it left off.
 
 - `NOVIEW`  
   Cancels the board viewer, if active.
@@ -28,7 +28,7 @@ The CLI is the interface to Maximus. It offers the following commands, all of wh
   Exits the program. It shuts down and saves all running threads first, including the viewer.
 
 - `RUN`  
-  Runs a batch file. Maximus asks for a filename, which is the name of the batch file you want to load. It does not automatically look in the `Files` directory for batch files. See [Batch Files](#batch-files) below for more information.
+  Runs a batch file. Maximus asks for a filename, which is the name of the batch file you want to load. It does not automatically look in the `files/` directory for batch files. See [Batch Files](#batch-files) below for more information.
 
 - `START`  
   Starts a new solver thread from the beginning. You will be asked for:
@@ -56,16 +56,16 @@ Commands can be typed in both lower and upper case, but not a mixture of both un
 
 ## Batch Files
 
-Batch files are external text files that can store commands. The only commands possible are `LOAD` and `START`, and they can be used as follows:
+Batch files are external text files that can store commands. The only commands possible are `load` and `start`, and they are case-sensitive in batch files. They can be used as follows:
 
 ```text
-START <dataset> <start corner config> <end corner config> <name> <pathname>
+start <dataset> <start corner config> <end corner config> <name> <pathname>
 ```
 
 where `pathname` can also be `NONE` in which case it defaults to `VERTICAL`, and
 
 ```text
-LOAD <save file>
+load <save file>
 ```
 
 which is self explanatory. You can also use `/* comments */`.
@@ -78,12 +78,12 @@ There are six types of file used or produced by Maximus.
 
 ### Datasets
 
-There are four datasets, all stored in the main directory with the executable:
+There are four datasets, all stored in the `datasets/` directory:
 
-- `Dataset_eternity2.txt` - the main puzzle
-- `Dataset_clue1.txt` - the small clue
-- `Dataset_clue2.txt` - the big clue
-- `Dataset_online.txt` - the online puzzle
+- `datasets/Dataset_Eternity2.txt` - the main puzzle
+- `datasets/Dataset_clue1.txt` - the small clue
+- `datasets/Dataset_clue2.txt` - the big clue
+- `datasets/Dataset_online.txt` - the online puzzle
 
 The format is as follows:
 
@@ -103,11 +103,11 @@ Described above, stored in the main directory.
 
 ### Solution files
 
-When the program finds its first solution for a given board, it produces a solution file, and only one. It is in the same format as the save file except its name is of the form `<savename>-thread<thread ID>_solution.txt`. They are produced in the `Solutions` directory.
+When the program finds its first solution for a given board, it produces a solution file, and only one. It is in the same format as the save file except its name is of the form `files/solutions/<savename>-thread<thread ID>_solution.txt`. It also writes a matching grid file at `files/solutions/<savename>-thread<thread ID>_solutionGrid.txt`.
 
 ### Save files
 
-Produced by the program and stored in the `Files` directory. The format is mostly self explanatory, but basically:
+Produced by the program and stored in the `files/` directory. The format is mostly self explanatory, but basically:
 
 ```text
 DATASET:                        <dataset name>
@@ -115,6 +115,7 @@ PATHFILE:                       <path name>
 START_CORNER_CONFIG:    <obvious>
 END_CORNER_CONFIG:      <obvious>
 CURRENT_CORNER_CONFIG:  <where it got to>
+FURTHEST:                       <furthest path ID>
 SOLUTIONS:                      <how many solutions it found>
 <tile index> <rotation> <x pos> <y pos> <fixed flag>
 ```
@@ -123,4 +124,8 @@ Tile index is 1 to 256, rotation is in 90 degree clockwise increments, and x and
 
 ### Output grids
 
-These are another form of output that show the tiles, and their rotations, in approximate board positions. They are for viewing only; they do not have any other purpose. Maximus produces them automatically when saving and stores them in the `Files` directory.
+These are another form of output that show the tiles, and their rotations, in approximate board positions. They are for viewing only; they do not have any other purpose. Maximus produces them automatically when saving and stores them in the `files/` directory.
+
+### Destroyed files
+
+When a thread object is destroyed, Maximus writes `files/Destroyed<thread ID>.txt`.

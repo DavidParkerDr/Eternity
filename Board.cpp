@@ -46,7 +46,7 @@ Board::Board(int threadID, std::string datasetName, std::string saveName, std::s
 
 // Loading constructor (ignore dataset, it gets overwritten)
 Board::Board(int threadID, std::string saveName)
-: _dataset("Dataset_Eternity2.txt"), _solutions(0), _saveName(saveName), _stopSignal(0), _threadID(threadID),
+: _dataset("datasets/Dataset_Eternity2.txt"), _solutions(0), _saveName(saveName), _stopSignal(0), _threadID(threadID),
   _runSilent(false), _furthestPathID(0)
 {
 
@@ -399,7 +399,7 @@ void Board::solver(Coordinate* coords)
 		if (_solutions == 1) 
 		{
 			stringstream solnName;
-			solnName << "Solutions/" << _saveName << "-thread" << _threadID << "_solution";
+			solnName << "files/solutions/" << _saveName << "-thread" << _threadID << "_solution";
 			if (!_runSilent) output(solnName.str() + ".txt");
 			if (!_runSilent) outputGrid(solnName.str() + "Grid.txt");
 		}
