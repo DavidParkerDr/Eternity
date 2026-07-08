@@ -62,7 +62,7 @@ Batch files are external text files that can store commands. The only commands p
 start <dataset> <start corner config> <end corner config> <name> <pathname>
 ```
 
-where `pathname` can also be `NONE` in which case it defaults to `VERTICAL`, and
+where `pathname` can also be `NONE` in which case it defaults to `VERTICAL`. Any other pathname is treated as a custom path file and is loaded from the `paths/` directory.
 
 ```text
 load <save file>

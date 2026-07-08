@@ -131,8 +131,9 @@ int main(int argc, char** argv)
 			std::string saveFile;
 			cin >> saveFile;
 
-			cout << "  Do you wish to use a path? If so, type it in. You can also type" << endl;
-			cout << "  VERTICAL or HORIZONTAL, or otherwise type \"N\" or \"n\" for no path.\n->" << endl;
+			cout << "  Do you wish to use a path? If so, type it in. Custom path files are loaded" << endl;
+			cout << "  from the paths directory. You can also type VERTICAL or HORIZONTAL, or" << endl;
+			cout << "  otherwise type \"N\" or \"n\" for no path.\n->" << endl;
 			std::string pathFile;
 			cin >> pathFile;
 

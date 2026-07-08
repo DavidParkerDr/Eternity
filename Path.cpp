@@ -49,10 +49,31 @@ void Path::defaultPathHorizontal(int width, int height)
 void Path::loadPath(std::string fileName)
 {
 	_path.clear();
-	ifstream fin(fileName.c_str());
+	std::vector<std::string> candidates;
+	candidates.push_back(fileName);
+	if (fileName.find("paths/") == std::string::npos && fileName.find("paths\\") == std::string::npos)
+	{
+		candidates.push_back("paths/" + fileName);
+		candidates.push_back("paths\\" + fileName);
+	}
+	candidates.push_back("files/" + fileName);
+	candidates.push_back("files\\" + fileName);
+
+	std::ifstream fin;
+	std::string resolvedName = fileName;
+	for (size_t i = 0; i < candidates.size(); ++i)
+	{
+		fin.open(candidates[i].c_str());
+		if (fin)
+		{
+			resolvedName = candidates[i];
+			break;
+		}
+		fin.clear();
+	}
 	if (fin)
 	{
-		_fileName = fileName;
+		_fileName = resolvedName;
 		int x, y;
 		fin >> x;
 		while (!fin.eof())
